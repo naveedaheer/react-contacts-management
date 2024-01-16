@@ -1,4 +1,4 @@
-export interface CreateContactModalProps {
+export interface ContactFormModalProps {
     open: boolean,
     onClose: () => void;
     onCreate: (formData: ContactFormData) => void;

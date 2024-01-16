@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { CreateContactModalProps } from "interfaces/view/contact";
+import { ContactFormModalProps } from "interfaces/view/contact";
 import styled from "@emotion/styled";
 
 const StyledDialog = styled(Dialog)`
@@ -27,7 +27,7 @@ const validationSchema = Yup.object({
   phone: Yup.string().required("Phone is required"),
 });
 
-export const CreateContactModal: FC<CreateContactModalProps> = ({
+export const ContactFormModal: FC<ContactFormModalProps> = ({
   open,
   onClose,
   onCreate,
@@ -115,4 +115,4 @@ export const CreateContactModal: FC<CreateContactModalProps> = ({
   );
 };
 
-export default CreateContactModal;
+export default ContactFormModal;

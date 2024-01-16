@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import ContactTable from "components/table";
 import { IContactData } from "interfaces/components/table";
 import styled from "@emotion/styled";
-import { CreateContactModal } from "./createContactModal";
+import { ContactFormModal } from "./contactFormModal";
 import {  useState } from "react";
 
 const ContactListHeader = styled(Box)`
@@ -84,7 +84,7 @@ export const ContactList = () => {
         </Button>
       </ContactListHeader>
       <ContactTable data={data} actions={{ onEdit, onDelete }} />
-      <CreateContactModal
+      <ContactFormModal
         onClose={() => setCreateContactModal(false)}
         open={createContactModal}
         onCreate={(data) => {
