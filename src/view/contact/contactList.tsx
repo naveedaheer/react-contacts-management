@@ -4,7 +4,7 @@ import ContactTable from "components/table";
 import { IContactData } from "interfaces/components/table";
 import styled from "@emotion/styled";
 import { CreateContactModal } from "./createContactModal";
-import { useState } from "react";
+import {  useState } from "react";
 
 const ContactListHeader = styled(Box)`
   display: flex;
@@ -33,6 +33,27 @@ const data: IContactData[] = [
     id: "1222",
     email: "test3@test.com",
     first_name: "test3",
+    last_name: "test last",
+    phone_number: 3000000000000,
+  },
+  {
+    id: "12134",
+    email: "test4@test.com",
+    first_name: "test4",
+    last_name: "test last",
+    phone_number: 3000000000000,
+  },
+  {
+    id: "133233",
+    email: "test5@test.com",
+    first_name: "test5",
+    last_name: "test last",
+    phone_number: 3000000000000,
+  },
+  {
+    id: "12322",
+    email: "test6@test.com",
+    first_name: "test6",
     last_name: "test last",
     phone_number: 3000000000000,
   },
