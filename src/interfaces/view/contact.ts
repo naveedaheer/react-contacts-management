@@ -1,12 +1,16 @@
 export interface ContactFormModalProps {
     open: boolean,
     onClose: () => void;
-    onCreate: (formData: ContactFormData) => void;
+    onSubmit: (formData: ContactFormData) => void;
+    mode: 'create' | 'edit';
+    initialData?: ContactFormData;
 }
 
+
 export interface ContactFormData {
-    first_name: string;
-    last_name: string;
-    email: string;
-    phone: string;
+    id?: string,
+    first_name: string,
+    last_name: string,
+    email: string,
+    phone_number: string | number
 }

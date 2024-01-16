@@ -24,24 +24,28 @@ const validationSchema = Yup.object({
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
-  phone: Yup.string().required("Phone is required"),
+  phone_number: Yup.string().required("Phone is required"),
 });
 
 export const ContactFormModal: FC<ContactFormModalProps> = ({
   open,
   onClose,
-  onCreate,
+  onSubmit,
+  initialData,
+  mode,
 }) => {
   const formik = useFormik({
     initialValues: {
       first_name: "",
       last_name: "",
       email: "",
-      phone: "",
+      phone_number: "",
+      ...initialData, // Set initial data for editing mode
     },
+    enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      onCreate(values);
+      onSubmit(values);
       onClose();
     },
   });
@@ -52,7 +56,9 @@ export const ContactFormModal: FC<ContactFormModalProps> = ({
   return (
     <StyledDialog open={open} onClose={handleClose}>
       <form onSubmit={formik.handleSubmit}>
-        <DialogTitle>Create Contact</DialogTitle>
+        <DialogTitle>
+          {mode === "create" ? "Create Contact" : "Edit Contact"}
+        </DialogTitle>
         <DialogContent>
           <TextField
             name="first_name"
@@ -91,15 +97,19 @@ export const ContactFormModal: FC<ContactFormModalProps> = ({
             helperText={formik.touched.email && formik.errors.email}
           />
           <TextField
-            name="phone"
+            name="phone_number"
             label="Phone"
             variant="outlined"
             fullWidth
             margin="dense"
-            value={formik.values.phone}
+            value={formik.values.phone_number}
             onChange={formik.handleChange}
-            error={formik.touched.phone && Boolean(formik.errors.phone)}
-            helperText={formik.touched.phone && formik.errors.phone}
+            error={
+              formik.touched.phone_number && Boolean(formik.errors.phone_number)
+            }
+            helperText={
+              formik.touched.phone_number && formik.errors.phone_number
+            }
           />
         </DialogContent>
         <DialogActions>
@@ -107,7 +117,7 @@ export const ContactFormModal: FC<ContactFormModalProps> = ({
             Cancel
           </Button>
           <Button type="submit" color="primary">
-            Create
+            {mode === "create" ? "Create" : "Save Changes"}
           </Button>
         </DialogActions>
       </form>

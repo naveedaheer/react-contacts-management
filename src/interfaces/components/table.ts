@@ -1,16 +1,10 @@
+import { ContactFormData } from "interfaces/view/contact";
 
 export interface ContactTableProps {
-    data: IContactData[],
+    data: ContactFormData[],
     actions: {
-        onEdit: (data: IContactData) => void,
-        onDelete: (data: IContactData) => void,
+        onEdit: (data: ContactFormData) => void,
+        onDelete: (data: ContactFormData) => void,
     }
 }
 
-export interface IContactData {
-    id: string,
-    first_name: string,
-    last_name: string,
-    email: string,
-    phone_number: number
-}

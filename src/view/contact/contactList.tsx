@@ -1,10 +1,10 @@
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import ContactTable from "components/table";
-import { IContactData } from "interfaces/components/table";
 import styled from "@emotion/styled";
 import { ContactFormModal } from "./contactFormModal";
-import {  useState } from "react";
+import { useState } from "react";
+import { ContactFormData } from "interfaces/view/contact";
 
 const ContactListHeader = styled(Box)`
   display: flex;
@@ -14,7 +14,7 @@ const ContactListHeader = styled(Box)`
   border-bottom: 1px solid #ccc;
   padding: 10px 0px;
 `;
-const data: IContactData[] = [
+const data: ContactFormData[] = [
   {
     id: "1234",
     email: "test@test.com",
@@ -60,13 +60,23 @@ const data: IContactData[] = [
 ];
 
 export const ContactList = () => {
-  const [createContactModal, setCreateContactModal] = useState<boolean>(false);
+  const [contactFormModal, setContactFormModal] = useState<boolean>(false);
+  const [contactToEdit, setContactToEdit] = useState<ContactFormData | null>(
+    null
+  );
 
-  const onEdit = (data: IContactData) => {
-    console.log(data, "edit");
+  const onEdit = (data: ContactFormData) => {
+    setContactToEdit(data);
+    setContactFormModal(true);
   };
-  const onDelete = (data: IContactData) => {
+  const onDelete = (data: ContactFormData) => {
     console.log(data, "delete");
+  };
+  const onCreateContact = (data: ContactFormData) => {
+    console.log(data, "create");
+  };
+  const onEditContact = (data: ContactFormData) => {
+    console.log(data, "edit");
   };
 
   return (
@@ -78,18 +88,23 @@ export const ContactList = () => {
         <Button
           variant="contained"
           color="primary"
-          onClick={() => setCreateContactModal(true)}
+          onClick={() => setContactFormModal(true)}
         >
           Add Contact
         </Button>
       </ContactListHeader>
       <ContactTable data={data} actions={{ onEdit, onDelete }} />
       <ContactFormModal
-        onClose={() => setCreateContactModal(false)}
-        open={createContactModal}
-        onCreate={(data) => {
-          console.log(data);
+        onClose={() => {
+          setContactFormModal(false);
+          setContactToEdit(null);
         }}
+        open={contactFormModal}
+        onSubmit={(data) =>
+          contactToEdit ? onEditContact(data) : onCreateContact(data)
+        }
+        mode={contactToEdit ? "edit" : "create"}
+        initialData={contactToEdit ?? undefined}
       />
     </Box>
   );
