@@ -1,11 +1,12 @@
-import React from 'react';
-import './App.css';
+import "./App.css";
+import { ContactList } from "view/contact/contactList";
 
-function App() {
+const App = () => {
   return (
-    <div >
+    <div>
+      <ContactList />
     </div>
   );
-}
+};
 
 export default App;
