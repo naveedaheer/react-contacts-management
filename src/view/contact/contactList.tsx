@@ -1,8 +1,19 @@
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import ContactTable from "components/table";
 import { IContactData } from "interfaces/components/table";
+import styled from "@emotion/styled";
+import { CreateContactModal } from "./createContactModal";
+import { useState } from "react";
 
+const ContactListHeader = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0px;
+`;
 const data: IContactData[] = [
   {
     id: "1234",
@@ -28,6 +39,8 @@ const data: IContactData[] = [
 ];
 
 export const ContactList = () => {
+  const [createContactModal, setCreateContactModal] = useState<boolean>(false);
+
   const onEdit = (data: IContactData) => {
     console.log(data, "edit");
   };
@@ -37,10 +50,26 @@ export const ContactList = () => {
 
   return (
     <Box padding={5}>
-      <Typography variant="h5" component="h2">
-        Contacts
-      </Typography>
+      <ContactListHeader>
+        <Typography variant="h5" component="h2">
+          Contacts
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setCreateContactModal(true)}
+        >
+          Add Contact
+        </Button>
+      </ContactListHeader>
       <ContactTable data={data} actions={{ onEdit, onDelete }} />
+      <CreateContactModal
+        onClose={() => setCreateContactModal(false)}
+        open={createContactModal}
+        onCreate={(data) => {
+          console.log(data);
+        }}
+      />
     </Box>
   );
 };
