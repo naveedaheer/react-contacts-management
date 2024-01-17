@@ -12,6 +12,8 @@ import {
 } from "@mui/material";
 import { ContactTableProps } from "interfaces/components/table";
 import styled from "@emotion/styled";
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
+import EditIcon from '@mui/icons-material/Edit';
 
 const ActionContainer = styled.div`
   display: flex;
@@ -63,20 +65,8 @@ const ContactTable: FC<ContactTableProps> = ({ data, actions }) => {
                 <TableCell>{row.phone_number}</TableCell>
                 <TableCell align="center">
                   <ActionContainer>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={() => actions.onEdit(row)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="secondary"
-                      onClick={() => actions.onDelete(row)}
-                    >
-                      Delete
-                    </Button>
+                    <EditIcon  onClick={() => actions.onEdit(row)} color="primary"/>
+                    <DeleteOutlinedIcon  onClick={() => actions.onDelete(row)} color="error"/>
                   </ActionContainer>
                 </TableCell>
               </TableRow>
