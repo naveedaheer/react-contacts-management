@@ -1,10 +1,14 @@
+import { useEffect } from "react";
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import ContactTable from "components/table";
 import styled from "@emotion/styled";
+
 import { ContactFormModal } from "./contactFormModal";
 import { useState } from "react";
 import { ContactFormData } from "interfaces/view/contact";
+import { useAppDispatch } from "hooks/storeHook";
+import { fetchContactFormDataAsync } from "store/features/contact/contactSlice";
 
 const ContactListHeader = styled(Box)`
   display: flex;
@@ -64,6 +68,7 @@ export const ContactList = () => {
   const [contactToEdit, setContactToEdit] = useState<ContactFormData | null>(
     null
   );
+  const dispatch = useAppDispatch();
 
   const onEdit = (data: ContactFormData) => {
     setContactToEdit(data);
@@ -78,7 +83,12 @@ export const ContactList = () => {
   const onEditContact = (data: ContactFormData) => {
     console.log(data, "edit");
   };
-
+  function handleFetchContact() {
+    dispatch(fetchContactFormDataAsync());
+  }
+  useEffect(() => {
+    handleFetchContact();
+  }, []);
   return (
     <Box padding={5}>
       <ContactListHeader>
