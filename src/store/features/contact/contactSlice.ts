@@ -1,8 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
-import { ContactFormData } from 'interfaces/view/contact'
-import { createContact, deleteContact, fetchContacts, updateContact } from 'services/contactApi'
-import { RootState } from 'store'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { ContactFormData } from 'interfaces/view/contact';
+import { createContact, deleteContact, fetchContacts, updateContact } from 'services/contactApi';
+import { RootState } from 'store';
 
 
 // Define a type for the slice state
@@ -46,7 +45,7 @@ const initialState: ContactState = {
         error: null,
     },
 
-}
+};
 export const fetchContactFormDataAsync = createAsyncThunk(
     'contact/fetchContact',
     async () => {
@@ -127,8 +126,8 @@ export const contactSlice = createSlice({
         //     state.contactList = action.payload
         // },
     },
-})
+});
 
 // export const { } = contactSlice.actions
 export const contactSelector = (state: RootState) => state.contact;
-export default contactSlice.reducer
+export default contactSlice.reducer;
