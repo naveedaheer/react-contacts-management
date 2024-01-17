@@ -5,6 +5,7 @@ export interface ContactTableProps {
     actions: {
         onEdit: (data: ContactFormData) => void,
         onDelete: (data: ContactFormData) => void,
-    }
+    },
+    isLoading:boolean
 }
 

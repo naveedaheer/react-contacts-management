@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 import { ContactFormModal } from "./contactFormModal";
 import { useState } from "react";
 import { ContactFormData } from "interfaces/view/contact";
-import { useAppDispatch } from "hooks/storeHook";
+import { useAppDispatch, useAppSelector } from "hooks/storeHook";
 import { fetchContactFormDataAsync } from "store/features/contact/contactSlice";
 
 const ContactListHeader = styled(Box)`
@@ -18,50 +18,6 @@ const ContactListHeader = styled(Box)`
   border-bottom: 1px solid #ccc;
   padding: 10px 0px;
 `;
-const data: ContactFormData[] = [
-  {
-    id: "1234",
-    email: "test@test.com",
-    firstName: "test",
-    lastName: "test last",
-    phoneNumber: 3000000000000,
-  },
-  {
-    id: "13333",
-    email: "test2@test.com",
-    firstName: "test2",
-    lastName: "test last",
-    phoneNumber: 3000000000000,
-  },
-  {
-    id: "1222",
-    email: "test3@test.com",
-    firstName: "test3",
-    lastName: "test last",
-    phoneNumber: 3000000000000,
-  },
-  {
-    id: "12134",
-    email: "test4@test.com",
-    firstName: "test4",
-    lastName: "test last",
-    phoneNumber: 3000000000000,
-  },
-  {
-    id: "133233",
-    email: "test5@test.com",
-    firstName: "test5",
-    lastName: "test last",
-    phoneNumber: 3000000000000,
-  },
-  {
-    id: "12322",
-    email: "test6@test.com",
-    firstName: "test6",
-    lastName: "test last",
-    phoneNumber: 3000000000000,
-  },
-];
 
 export const ContactList = () => {
   const [contactFormModal, setContactFormModal] = useState<boolean>(false);
@@ -69,6 +25,9 @@ export const ContactList = () => {
     null
   );
   const dispatch = useAppDispatch();
+  const { data, status, error } = useAppSelector(
+    (state) => state.contact.fetchData
+  );
 
   const onEdit = (data: ContactFormData) => {
     setContactToEdit(data);
@@ -89,6 +48,7 @@ export const ContactList = () => {
   useEffect(() => {
     handleFetchContact();
   }, []);
+
   return (
     <Box padding={5}>
       <ContactListHeader>
@@ -103,7 +63,11 @@ export const ContactList = () => {
           Add Contact
         </Button>
       </ContactListHeader>
-      <ContactTable data={data} actions={{ onEdit, onDelete }} />
+      <ContactTable
+        data={data ?? []}
+        actions={{ onEdit, onDelete }}
+        isLoading={status === "loading"}
+      />
       <ContactFormModal
         onClose={() => {
           setContactFormModal(false);

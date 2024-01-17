@@ -7,20 +7,34 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Button,
+  CircularProgress,
   TablePagination,
+  Typography,
+  Box,
 } from "@mui/material";
 import { ContactTableProps } from "interfaces/components/table";
 import styled from "@emotion/styled";
-import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
-import EditIcon from '@mui/icons-material/Edit';
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
+import EditIcon from "@mui/icons-material/Edit";
+import Snackbar from '@mui/material/Snackbar';
 
 const ActionContainer = styled.div`
   display: flex;
   gap: 8px;
   justify-content: center;
 `;
-const ContactTable: FC<ContactTableProps> = ({ data, actions }) => {
+const BoxCenter = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  padding: 20px;
+`;
+const BoxPagination = styled(Box)`
+  padding: 20px;
+`;
+const ContactTable: FC<ContactTableProps> = ({ data, actions, isLoading }) => {
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSizeRowNumber, setPageSizeRowNumber] = useState(5);
 
@@ -31,9 +45,7 @@ const ContactTable: FC<ContactTableProps> = ({ data, actions }) => {
     setPageNumber(newPage);
   };
 
-  const handleChangePageSize = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChangePageSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageSizeRowNumber(parseInt(event.target.value, 10));
     setPageNumber(0);
   };
@@ -56,33 +68,51 @@ const ContactTable: FC<ContactTableProps> = ({ data, actions }) => {
               <TableCell align="center">Action</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
-            {displayedData.map((row) => (
-              <TableRow key={row.id}>
-                <TableCell>{row.firstName}</TableCell>
-                <TableCell>{row.lastName}</TableCell>
-                <TableCell>{row.email}</TableCell>
-                <TableCell>{row.phoneNumber}</TableCell>
-                <TableCell align="center">
-                  <ActionContainer>
-                    <EditIcon  onClick={() => actions.onEdit(row)} color="primary"/>
-                    <DeleteOutlinedIcon  onClick={() => actions.onDelete(row)} color="error"/>
-                  </ActionContainer>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+          {isLoading ? (
+            <BoxCenter>
+              <CircularProgress />
+            </BoxCenter>
+          ) : data?.length ? (
+            <TableBody>
+              {displayedData.map((row) => (
+                <TableRow key={row.id}>
+                  <TableCell>{row.firstName}</TableCell>
+                  <TableCell>{row.lastName}</TableCell>
+                  <TableCell>{row.email}</TableCell>
+                  <TableCell>{row.phoneNumber}</TableCell>
+                  <TableCell align="center">
+                    <ActionContainer>
+                      <EditIcon
+                        onClick={() => actions.onEdit(row)}
+                        color="primary"
+                      />
+                      <DeleteOutlinedIcon
+                        onClick={() => actions.onDelete(row)}
+                        color="error"
+                      />
+                    </ActionContainer>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          ) : (
+            <BoxCenter>
+              <Typography variant="body1">No data available.</Typography>
+            </BoxCenter>
+          )}
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[5, 10, 25]}
-        component="div"
-        count={data.length}
-        rowsPerPage={pageSizeRowNumber}
-        page={pageNumber}
-        onPageChange={handleChangePageNumber}
-        onRowsPerPageChange={handleChangePageSize}
-      />
+      <BoxPagination>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={data.length}
+          rowsPerPage={pageSizeRowNumber}
+          page={pageNumber}
+          onPageChange={handleChangePageNumber}
+          onRowsPerPageChange={handleChangePageSize}
+        />
+      </BoxPagination>
     </>
   );
 };
