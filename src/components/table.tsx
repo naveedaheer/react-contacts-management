@@ -59,10 +59,10 @@ const ContactTable: FC<ContactTableProps> = ({ data, actions }) => {
           <TableBody>
             {displayedData.map((row) => (
               <TableRow key={row.id}>
-                <TableCell>{row.first_name}</TableCell>
-                <TableCell>{row.last_name}</TableCell>
+                <TableCell>{row.firstName}</TableCell>
+                <TableCell>{row.lastName}</TableCell>
                 <TableCell>{row.email}</TableCell>
-                <TableCell>{row.phone_number}</TableCell>
+                <TableCell>{row.phoneNumber}</TableCell>
                 <TableCell align="center">
                   <ActionContainer>
                     <EditIcon  onClick={() => actions.onEdit(row)} color="primary"/>

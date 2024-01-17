@@ -19,12 +19,12 @@ const StyledDialog = styled(Dialog)`
 `;
 
 const validationSchema = Yup.object({
-  first_name: Yup.string().required("First Name is required"),
-  last_name: Yup.string().required("Last Name is required"),
+  firstName: Yup.string().required("First Name is required"),
+  lastName: Yup.string().required("Last Name is required"),
   email: Yup.string()
     .email("Invalid email address")
     .required("Email is required"),
-  phone_number: Yup.string().required("Phone is required"),
+  phoneNumber: Yup.string().required("Phone is required"),
 });
 
 export const ContactFormModal: FC<ContactFormModalProps> = ({
@@ -36,10 +36,10 @@ export const ContactFormModal: FC<ContactFormModalProps> = ({
 }) => {
   const formik = useFormik({
     initialValues: {
-      first_name: "",
-      last_name: "",
+      firstName: "",
+      lastName: "",
       email: "",
-      phone_number: "",
+      phoneNumber: "",
       ...initialData, // Set initial data for editing mode
     },
     enableReinitialize: true,
@@ -61,28 +61,28 @@ export const ContactFormModal: FC<ContactFormModalProps> = ({
         </DialogTitle>
         <DialogContent>
           <TextField
-            name="first_name"
+            name="firstName"
             label="First Name"
             variant="outlined"
             fullWidth
             margin="dense"
-            value={formik.values.first_name}
+            value={formik.values.firstName}
             onChange={formik.handleChange}
             error={
-              formik.touched.first_name && Boolean(formik.errors.first_name)
+              formik.touched.firstName && Boolean(formik.errors.firstName)
             }
-            helperText={formik.touched.first_name && formik.errors.first_name}
+            helperText={formik.touched.firstName && formik.errors.firstName}
           />
           <TextField
-            name="last_name"
+            name="lastName"
             label="Last Name"
             variant="outlined"
             fullWidth
             margin="dense"
-            value={formik.values.last_name}
+            value={formik.values.lastName}
             onChange={formik.handleChange}
-            error={formik.touched.last_name && Boolean(formik.errors.last_name)}
-            helperText={formik.touched.last_name && formik.errors.last_name}
+            error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+            helperText={formik.touched.lastName && formik.errors.lastName}
           />
           <TextField
             name="email"
@@ -97,18 +97,18 @@ export const ContactFormModal: FC<ContactFormModalProps> = ({
             helperText={formik.touched.email && formik.errors.email}
           />
           <TextField
-            name="phone_number"
+            name="phoneNumber"
             label="Phone"
             variant="outlined"
             fullWidth
             margin="dense"
-            value={formik.values.phone_number}
+            value={formik.values.phoneNumber}
             onChange={formik.handleChange}
             error={
-              formik.touched.phone_number && Boolean(formik.errors.phone_number)
+              formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)
             }
             helperText={
-              formik.touched.phone_number && formik.errors.phone_number
+              formik.touched.phoneNumber && formik.errors.phoneNumber
             }
           />
         </DialogContent>

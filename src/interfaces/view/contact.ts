@@ -9,8 +9,8 @@ export interface ContactFormModalProps {
 
 export interface ContactFormData {
     id?: string,
-    first_name: string,
-    last_name: string,
+    firstName: string,
+    lastName: string,
     email: string,
-    phone_number: string | number
+    phoneNumber: string | number
 }
