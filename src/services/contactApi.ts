@@ -1,13 +1,18 @@
 // apiService.ts
 import axios, { AxiosResponse } from 'axios';
-import { ContactFormData } from 'interfaces/view/contact';
+import { ContactFormData, ContactParams } from 'interfaces/view/contact';
 
 
 const apiUrl = process.env.REACT_APP_API_BASE_URL || '';
 
-export const fetchContacts = async (): Promise<ContactFormData> => {
+export const fetchContacts = async (params: ContactParams
+): Promise<ContactFormData> => {
     try {
-        const response: AxiosResponse<ContactFormData> = await axios.get(`${apiUrl}/contact`);
+        const response: AxiosResponse<ContactFormData> = await axios.get(`${apiUrl}/contact`, {
+            params: {
+                ...params
+            },
+        });
         return response.data;
     } catch (error) {
         throw new Error('Failed to fetch data');

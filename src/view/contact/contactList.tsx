@@ -24,6 +24,9 @@ export const ContactList = () => {
   const [contactToEdit, setContactToEdit] = useState<ContactFormData | null>(
     null
   );
+  const [pageNumber, setPageNumber] = useState(0);
+  const [pageSizeRowNumber, setPageSizeRowNumber] = useState(5);
+
   const dispatch = useAppDispatch();
   const { data, status, error } = useAppSelector(
     (state) => state.contact.fetchData
@@ -43,7 +46,9 @@ export const ContactList = () => {
     console.log(data, "edit");
   };
   function handleFetchContact() {
-    dispatch(fetchContactFormDataAsync());
+    dispatch(
+      fetchContactFormDataAsync({ pageNumber, pageSize: pageSizeRowNumber })
+    );
   }
   useEffect(() => {
     handleFetchContact();
@@ -67,6 +72,10 @@ export const ContactList = () => {
         data={data ?? []}
         actions={{ onEdit, onDelete }}
         isLoading={status === "loading"}
+        pageNumber={pageNumber}
+        pageSizeRowNumber={pageSizeRowNumber}
+        setPageNumber={setPageNumber}
+        setPageSizeRowNumber={setPageSizeRowNumber}
       />
       <ContactFormModal
         onClose={() => {

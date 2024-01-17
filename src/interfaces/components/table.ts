@@ -6,6 +6,10 @@ export interface ContactTableProps {
         onEdit: (data: ContactFormData) => void,
         onDelete: (data: ContactFormData) => void,
     },
-    isLoading:boolean
+    isLoading:boolean,
+    pageNumber:number,
+    pageSizeRowNumber:number,
+    setPageNumber:React.Dispatch<React.SetStateAction<number>>,
+    setPageSizeRowNumber:React.Dispatch<React.SetStateAction<number>>
 }
 

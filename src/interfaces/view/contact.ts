@@ -14,3 +14,10 @@ export interface ContactFormData {
     email: string,
     phoneNumber: string | number
 }
+
+export interface ContactParams{
+    pageSize: number,
+    pageNumber: number,
+    firstName?: string,
+    lastName?: string
+}

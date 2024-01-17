@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import {
   Table,
   TableBody,
@@ -34,10 +34,15 @@ const BoxCenter = styled(Box)`
 const BoxPagination = styled(Box)`
   padding: 20px;
 `;
-const ContactTable: FC<ContactTableProps> = ({ data, actions, isLoading }) => {
-  const [pageNumber, setPageNumber] = useState(0);
-  const [pageSizeRowNumber, setPageSizeRowNumber] = useState(5);
-
+const ContactTable: FC<ContactTableProps> = ({
+  data,
+  actions,
+  isLoading,
+  pageNumber,
+  pageSizeRowNumber,
+  setPageNumber,
+  setPageSizeRowNumber,
+}) => {
   const handleChangePageNumber = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { ContactFormData } from 'interfaces/view/contact';
+import { ContactFormData, ContactParams } from 'interfaces/view/contact';
 import { createContact, deleteContact, fetchContacts, updateContact } from 'services/contactApi';
 import { RootState } from 'store';
 
@@ -48,8 +48,8 @@ const initialState: ContactState = {
 };
 export const fetchContactFormDataAsync = createAsyncThunk(
     'contact/fetchContact',
-    async () => {
-        return fetchContacts();
+    async (params: ContactParams) => {
+        return fetchContacts(params);
     }
 );
 export const createContactFormDataAsync = createAsyncThunk(
