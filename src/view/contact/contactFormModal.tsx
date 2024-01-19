@@ -6,6 +6,7 @@ import {
   DialogActions,
   Button,
   TextField,
+  Grid,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -14,7 +15,9 @@ import styled from "@emotion/styled";
 
 const StyledDialog = styled(Dialog)`
   .MuiDialog-paper {
-    width: 300px;
+    min-width: 300px
+    width: 100%;
+    max-width: 650px;
   }
 `;
 
@@ -60,63 +63,76 @@ export const ContactFormModal: FC<ContactFormModalProps> = ({
           {mode === "create" ? "Create Contact" : "Edit Contact"}
         </DialogTitle>
         <DialogContent>
-          <TextField
-            name="firstName"
-            label="First Name"
-            variant="outlined"
-            fullWidth
-            margin="dense"
-            value={formik.values.firstName}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.firstName && Boolean(formik.errors.firstName)
-            }
-            helperText={formik.touched.firstName && formik.errors.firstName}
-          />
-          <TextField
-            name="lastName"
-            label="Last Name"
-            variant="outlined"
-            fullWidth
-            margin="dense"
-            value={formik.values.lastName}
-            onChange={formik.handleChange}
-            error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-            helperText={formik.touched.lastName && formik.errors.lastName}
-          />
-          <TextField
-            name="email"
-            label="Email"
-            type="email"
-            variant="outlined"
-            fullWidth
-            margin="dense"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
-          />
-          <TextField
-            name="phoneNumber"
-            label="Phone"
-            variant="outlined"
-            fullWidth
-            margin="dense"
-            value={formik.values.phoneNumber}
-            onChange={formik.handleChange}
-            error={
-              formik.touched.phoneNumber && Boolean(formik.errors.phoneNumber)
-            }
-            helperText={
-              formik.touched.phoneNumber && formik.errors.phoneNumber
-            }
-          />
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <TextField
+                name="firstName"
+                label="First Name"
+                variant="outlined"
+                fullWidth
+                margin="dense"
+                value={formik.values.firstName}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.firstName && Boolean(formik.errors.firstName)
+                }
+                helperText={formik.touched.firstName && formik.errors.firstName}
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                name="lastName"
+                label="Last Name"
+                variant="outlined"
+                fullWidth
+                margin="dense"
+                value={formik.values.lastName}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.lastName && Boolean(formik.errors.lastName)
+                }
+                helperText={formik.touched.lastName && formik.errors.lastName}
+              />
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <TextField
+                name="email"
+                label="Email"
+                type="email"
+                variant="outlined"
+                fullWidth
+                margin="dense"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
+              />
+            </Grid>
+            <Grid item xs={12} md={12}>
+              <TextField
+                name="phoneNumber"
+                label="Phone"
+                variant="outlined"
+                fullWidth
+                margin="dense"
+                value={formik.values.phoneNumber}
+                onChange={formik.handleChange}
+                error={
+                  formik.touched.phoneNumber &&
+                  Boolean(formik.errors.phoneNumber)
+                }
+                helperText={
+                  formik.touched.phoneNumber && formik.errors.phoneNumber
+                }
+              />
+            </Grid>
+          </Grid>
         </DialogContent>
         <DialogActions>
-          <Button type="button" onClick={handleClose} color="secondary">
+          <Button type="button" onClick={handleClose} color="secondary" variant="contained">
             Cancel
           </Button>
-          <Button type="submit" color="primary">
+          <Button type="submit" color="primary" variant="contained">
             {mode === "create" ? "Create" : "Save Changes"}
           </Button>
         </DialogActions>

@@ -16,13 +16,13 @@ import { ContactTableProps } from "interfaces/components/table";
 import styled from "@emotion/styled";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import EditIcon from "@mui/icons-material/Edit";
-import Snackbar from '@mui/material/Snackbar';
 
 const ActionContainer = styled.div`
   display: flex;
   gap: 8px;
   justify-content: center;
 `;
+
 const BoxCenter = styled(Box)`
   display: flex;
   justify-content: center;
@@ -31,9 +31,16 @@ const BoxCenter = styled(Box)`
   position: absolute;
   padding: 20px;
 `;
+
+const NoDataBox = styled(Box)`
+  width: 100%;
+  padding: 20px;
+`;
+
 const BoxPagination = styled(Box)`
   padding: 20px;
 `;
+
 const ContactTable: FC<ContactTableProps> = ({
   data,
   actions,
@@ -101,9 +108,11 @@ const ContactTable: FC<ContactTableProps> = ({
               ))}
             </TableBody>
           ) : (
-            <BoxCenter>
-              <Typography variant="body1">No data available.</Typography>
-            </BoxCenter>
+            <TableBody>
+              <NoDataBox>
+                <Typography variant="body1">No data available.</Typography>
+              </NoDataBox>
+            </TableBody>
           )}
         </Table>
       </TableContainer>
