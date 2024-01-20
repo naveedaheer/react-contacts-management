@@ -8,7 +8,7 @@ import { ContactFormModal } from "./contactFormModal";
 import { useState } from "react";
 import { ContactFormData } from "interfaces/view/contact";
 import { useAppDispatch, useAppSelector } from "hooks/storeHook";
-import { fetchContactFormDataAsync } from "store/features/contact/contactSlice";
+import { createContactFormDataAsync, fetchContactFormDataAsync, updateContactFormDataAsync } from "store/features/contact/contactSlice";
 
 const ContactListHeader = styled(Box)`
   display: flex;
@@ -40,10 +40,14 @@ export const ContactList = () => {
     console.log(data, "delete");
   };
   const onCreateContact = (data: ContactFormData) => {
-    console.log(data, "create");
+    dispatch(
+      createContactFormDataAsync(data)
+    );
   };
   const onEditContact = (data: ContactFormData) => {
-    console.log(data, "edit");
+    dispatch(
+      updateContactFormDataAsync({ id: contactToEdit?.id as string, formData: data })
+    );
   };
   function handleFetchContact() {
     dispatch(

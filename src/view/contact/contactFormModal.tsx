@@ -12,8 +12,6 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ContactFormModalProps } from "interfaces/view/contact";
 import styled from "@emotion/styled";
-import { createContactFormDataAsync } from "store/features/contact/contactSlice";
-import { useAppDispatch } from "hooks/storeHook";
 
 const StyledDialog = styled(Dialog)`
   .MuiDialog-paper {
@@ -39,7 +37,6 @@ export const ContactFormModal: FC<ContactFormModalProps> = ({
   initialData,
   mode,
 }) => {
-  const dispatch = useAppDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -52,9 +49,6 @@ export const ContactFormModal: FC<ContactFormModalProps> = ({
     enableReinitialize: true,
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      dispatch(
-        createContactFormDataAsync(values)
-      );
       onSubmit(values);
       onClose();
     },
