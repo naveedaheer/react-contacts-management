@@ -52,7 +52,7 @@ export const ContactList = () => {
   }
   useEffect(() => {
     handleFetchContact();
-  }, []);
+  }, [pageNumber, pageSizeRowNumber]);
 
   return (
     <Box padding={5}>

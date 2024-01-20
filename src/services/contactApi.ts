@@ -3,6 +3,7 @@ import { ContactFormData, ContactParams } from 'interfaces/view/contact';
 
 
 const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://contacts-management-a936dcf43aca.herokuapp.com';
+// const apiUrl = 'http://localhost:4000';
 
 export const fetchContacts = async (params: ContactParams
 ): Promise<ContactFormData> => {

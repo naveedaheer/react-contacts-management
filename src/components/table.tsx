@@ -54,7 +54,9 @@ const ContactTable: FC<ContactTableProps> = ({
     event: React.MouseEvent<HTMLButtonElement> | null,
     newPage: number
   ) => {
-    setPageNumber(newPage);
+    console.log(newPage);
+
+    setPageNumber(newPage + 1);
   };
 
   const handleChangePageSize = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,10 +64,7 @@ const ContactTable: FC<ContactTableProps> = ({
     setPageNumber(1);
   };
 
-  const displayedData = contactData?.data.slice(
-    pageNumber * pageSizeRowNumber,
-    pageNumber * pageSizeRowNumber + pageSizeRowNumber
-  );
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -85,7 +84,7 @@ const ContactTable: FC<ContactTableProps> = ({
             </BoxCenter>
           ) : contactData?.data?.length ? (
             <TableBody>
-              {displayedData?.map((row) => (
+              {contactData?.data?.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell>{row.firstName}</TableCell>
                   <TableCell>{row.lastName}</TableCell>
@@ -121,7 +120,7 @@ const ContactTable: FC<ContactTableProps> = ({
           component="div"
           count={contactData?.pageInfo?.totalContacts ?? 0}
           rowsPerPage={pageSizeRowNumber}
-          page={pageNumber}
+          page={pageNumber - 1}
           onPageChange={handleChangePageNumber}
           onRowsPerPageChange={handleChangePageSize}
         />
