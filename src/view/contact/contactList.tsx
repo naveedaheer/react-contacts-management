@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Button, Typography } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import ContactTable from "components/table";
 import styled from "@emotion/styled";
@@ -18,6 +18,12 @@ const ContactListHeader = styled(Box)`
   border-bottom: 1px solid #ccc;
   padding: 10px 0px;
 `;
+const ContactListFilter = styled(Box)`
+  margin-bottom: 20px;
+  padding: 10px 0px;
+  display: flex;
+  align-items: end;
+`;
 
 export const ContactList = () => {
   const [contactFormModal, setContactFormModal] = useState<boolean>(false);
@@ -26,6 +32,9 @@ export const ContactList = () => {
   );
   const [pageNumber, setPageNumber] = useState(1);
   const [pageSizeRowNumber, setPageSizeRowNumber] = useState(5);
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+
 
   const dispatch = useAppDispatch();
   const { data, status, error } = useAppSelector(
@@ -51,15 +60,26 @@ export const ContactList = () => {
       updateContactFormDataAsync({ id: contactToEdit?.id as string, formData: data })
     );
   };
-  function handleFetchContact() {
+  const handleFetchContact = () => {
     dispatch(
-      fetchContactFormDataAsync({ pageNumber, pageSize: pageSizeRowNumber })
+      fetchContactFormDataAsync({ pageNumber, pageSize: pageSizeRowNumber, firstName, lastName })
     );
   }
   useEffect(() => {
     handleFetchContact();
   }, [pageNumber, pageSizeRowNumber]);
 
+  const clearFilters = () => {
+    setFirstName('')
+    setLastName('')
+    setPageNumber(1)
+    setPageSizeRowNumber(5)
+    dispatch(
+      fetchContactFormDataAsync({ pageNumber: 1, pageSize: 5, })
+    );
+  }
+
+  const isDisplayClearFilterButton = firstName || lastName || pageNumber !== 1 || pageSizeRowNumber !== 5
   return (
     <Box padding={5}>
       <ContactListHeader>
@@ -74,6 +94,29 @@ export const ContactList = () => {
           Add Contact
         </Button>
       </ContactListHeader>
+      <Typography variant="h6" component="h2" sx={{ mb: 3 }}>
+        Filters:
+      </Typography>
+      <ContactListFilter>
+        <TextField id="first_name" label="First Name" variant="standard" onChange={(e) => setFirstName(e.target.value)} value={firstName} />
+        <TextField sx={{ ml: 2 }} id="last_name" label="Last Name" variant="standard" onChange={(e) => setLastName(e.target.value)} value={lastName} />
+        <Button
+          sx={{ ml: 2 }}
+          variant="outlined"
+          color="primary"
+          onClick={() => handleFetchContact()}
+        >
+          Search
+        </Button>
+        {isDisplayClearFilterButton && <Button
+          sx={{ ml: 2 }}
+          variant="outlined"
+          color="primary"
+          onClick={() => clearFilters()}
+        >
+          Clear Filters
+        </Button>}
+      </ContactListFilter>
       <ContactTable
         data={data ?? null}
         actions={{ onEdit, onDelete }}
