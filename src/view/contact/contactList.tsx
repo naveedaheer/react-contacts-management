@@ -9,6 +9,7 @@ import { useState } from "react";
 import { ContactFormData } from "interfaces/view/contact";
 import { useAppDispatch, useAppSelector } from "hooks/storeHook";
 import { createContactFormDataAsync, deleteContactFormDataAsync, fetchContactFormDataAsync, updateContactFormDataAsync } from "store/features/contact/contactSlice";
+import { DeleteConfirmationDialog } from "components/confirmation";
 
 const ContactListHeader = styled(Box)`
   display: flex;
@@ -27,6 +28,9 @@ const ContactListFilter = styled(Box)`
 
 export const ContactList = () => {
   const [contactFormModal, setContactFormModal] = useState<boolean>(false);
+  const [deleteId, setDeletedId] = useState<string>('');
+
+
   const [contactToEdit, setContactToEdit] = useState<ContactFormData | null>(
     null
   );
@@ -46,10 +50,13 @@ export const ContactList = () => {
     setContactFormModal(true);
   };
   const onDelete = (data: ContactFormData) => {
-    dispatch(
-      deleteContactFormDataAsync(data?.id as string)
-    );
+    setDeletedId(data?.id as string);
   };
+  const handleDeleteConfirmed = () => {
+    dispatch(
+      deleteContactFormDataAsync(deleteId)
+    );
+  }
   const onCreateContact = (data: ContactFormData) => {
     dispatch(
       createContactFormDataAsync(data)
@@ -137,6 +144,11 @@ export const ContactList = () => {
         }
         mode={contactToEdit ? "edit" : "create"}
         initialData={contactToEdit ?? undefined}
+      />
+      <DeleteConfirmationDialog
+        onDelete={handleDeleteConfirmed}
+        open={Boolean(deleteId)}
+        handleClose={() => setDeletedId('')}
       />
     </Box>
   );

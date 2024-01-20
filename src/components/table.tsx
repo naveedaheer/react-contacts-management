@@ -95,10 +95,13 @@ const ContactTable: FC<ContactTableProps> = ({
                       <EditIcon
                         onClick={() => actions.onEdit(row)}
                         color="primary"
+                        cursor={'pointer'}
+
                       />
                       <DeleteOutlinedIcon
                         onClick={() => actions.onDelete(row)}
                         color="error"
+                        cursor={'pointer'}
                       />
                     </ActionContainer>
                   </TableCell>
