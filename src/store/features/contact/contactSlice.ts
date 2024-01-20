@@ -120,11 +120,7 @@ export const contactSlice = createSlice({
                 state.deleteData.error = action.payload ?? 'Failed to delete contact form data';
             });
     },
-    reducers: {
-        // updateContactList: (state, action: PayloadAction<ContactFormData[]>) => {
-        //     state.contactList = action.payload
-        // },
-    },
+    reducers: {},
 })
 
 // export const { } = contactSlice.actions

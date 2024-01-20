@@ -36,7 +36,7 @@ export const ContactList = () => {
     null
   );
   const [pageNumber, setPageNumber] = useState(1);
-  const [pageSizeRowNumber, setPageSizeRowNumber] = useState(5);
+  const [pageSize, setPageSize] = useState(5);
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
   const [openSnackBar, setOpenSnackBar] = useState<boolean>(false)
@@ -80,18 +80,18 @@ export const ContactList = () => {
   };
   const handleFetchContact = () => {
     dispatch(
-      fetchContactFormDataAsync({ pageNumber, pageSize: pageSizeRowNumber, firstName, lastName })
+      fetchContactFormDataAsync({ pageNumber, pageSize, firstName, lastName })
     );
   }
   useEffect(() => {
     handleFetchContact();
-  }, [pageNumber, pageSizeRowNumber]);
+  }, [pageNumber, pageSize]);
 
   const clearFilters = () => {
     setFirstName('')
     setLastName('')
     setPageNumber(1)
-    setPageSizeRowNumber(5)
+    setPageSize(5)
     dispatch(
       fetchContactFormDataAsync({ pageNumber: 1, pageSize: 5, })
     );
@@ -140,7 +140,7 @@ export const ContactList = () => {
     }
   }, [updateStatus])
 
-  const isDisplayClearFilterButton = firstName || lastName || pageNumber !== 1 || pageSizeRowNumber !== 5;
+  const isDisplayClearFilterButton = firstName || lastName || pageNumber !== 1 || pageSize !== 5;
   return (
     <Box padding={5}>
       <ContactListHeader>
@@ -180,9 +180,9 @@ export const ContactList = () => {
         actions={{ onEdit, onDelete }}
         isLoading={status === "loading"}
         pageNumber={pageNumber}
-        pageSizeRowNumber={pageSizeRowNumber}
+        pageSize={pageSize}
         setPageNumber={setPageNumber}
-        setPageSizeRowNumber={setPageSizeRowNumber}
+        setPageSize={setPageSize}
       />
       <ContactFormModal
         onClose={() => {

@@ -46,9 +46,9 @@ const ContactTable: FC<ContactTableProps> = ({
   actions,
   isLoading,
   pageNumber,
-  pageSizeRowNumber,
+  pageSize,
   setPageNumber,
-  setPageSizeRowNumber,
+  setPageSize,
 }) => {
   const handleChangePageNumber = (
     event: React.MouseEvent<HTMLButtonElement> | null,
@@ -60,7 +60,7 @@ const ContactTable: FC<ContactTableProps> = ({
   };
 
   const handleChangePageSize = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPageSizeRowNumber(parseInt(event.target.value, 10));
+    setPageSize(parseInt(event.target.value, 10));
     setPageNumber(1);
   };
 
@@ -122,7 +122,7 @@ const ContactTable: FC<ContactTableProps> = ({
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={contactData?.pageInfo?.totalContacts ?? 0}
-          rowsPerPage={pageSizeRowNumber}
+          rowsPerPage={pageSize}
           page={pageNumber - 1}
           onPageChange={handleChangePageNumber}
           onRowsPerPageChange={handleChangePageSize}
