@@ -69,7 +69,7 @@ export const ContactList = () => {
         </Button>
       </ContactListHeader>
       <ContactTable
-        data={data ?? []}
+        data={data ?? null}
         actions={{ onEdit, onDelete }}
         isLoading={status === "loading"}
         pageNumber={pageNumber}

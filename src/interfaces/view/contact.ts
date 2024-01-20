@@ -21,3 +21,15 @@ export interface ContactParams{
     firstName?: string,
     lastName?: string
 }
+
+export interface PageInfo {
+    pageSize: number;
+    currentPage: number;
+    totalContacts: number;
+    totalPages: number;
+  }
+  
+  export interface ContactsResponse {
+    data: ContactFormData[];
+    pageInfo: PageInfo;
+  }

@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { ContactFormData, ContactParams } from 'interfaces/view/contact';
+import { ContactFormData, ContactParams, ContactsResponse } from 'interfaces/view/contact';
 import { createContact, deleteContact, fetchContacts, updateContact } from 'services/contactApi';
 import { RootState } from 'store';
 
 // Define a type for the slice state
 interface ContactState {
     fetchData: {
-        data: ContactFormData[] | null;
+        data: ContactsResponse | null;
         status: 'idle' | 'loading' | 'succeeded' | 'failed';
         error: string | null;
     };

@@ -42,7 +42,7 @@ const BoxPagination = styled(Box)`
 `;
 
 const ContactTable: FC<ContactTableProps> = ({
-  data,
+  data: contactData,
   actions,
   isLoading,
   pageNumber,
@@ -62,11 +62,10 @@ const ContactTable: FC<ContactTableProps> = ({
     setPageNumber(1);
   };
 
-  const displayedData = data.slice(
+  const displayedData = contactData?.data.slice(
     pageNumber * pageSizeRowNumber,
     pageNumber * pageSizeRowNumber + pageSizeRowNumber
   );
-
   return (
     <>
       <TableContainer component={Paper}>
@@ -84,9 +83,9 @@ const ContactTable: FC<ContactTableProps> = ({
             <BoxCenter>
               <CircularProgress />
             </BoxCenter>
-          ) : data?.length ? (
+          ) : contactData?.data?.length ? (
             <TableBody>
-              {displayedData.map((row) => (
+              {displayedData?.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell>{row.firstName}</TableCell>
                   <TableCell>{row.lastName}</TableCell>
@@ -120,7 +119,7 @@ const ContactTable: FC<ContactTableProps> = ({
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={data.length}
+          count={contactData?.pageInfo?.totalContacts ?? 0}
           rowsPerPage={pageSizeRowNumber}
           page={pageNumber}
           onPageChange={handleChangePageNumber}
