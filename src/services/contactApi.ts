@@ -1,9 +1,8 @@
-// apiService.ts
 import axios, { AxiosResponse } from 'axios';
 import { ContactFormData, ContactParams } from 'interfaces/view/contact';
 
 
-const apiUrl = process.env.REACT_APP_API_BASE_URL || '';
+const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://contacts-management-a936dcf43aca.herokuapp.com';
 
 export const fetchContacts = async (params: ContactParams
 ): Promise<ContactFormData> => {
