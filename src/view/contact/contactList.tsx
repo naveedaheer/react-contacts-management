@@ -8,7 +8,7 @@ import { ContactFormModal } from "./contactFormModal";
 import { useState } from "react";
 import { ContactFormData } from "interfaces/view/contact";
 import { useAppDispatch, useAppSelector } from "hooks/storeHook";
-import { createContactFormDataAsync, fetchContactFormDataAsync, updateContactFormDataAsync } from "store/features/contact/contactSlice";
+import { createContactFormDataAsync, deleteContactFormDataAsync, fetchContactFormDataAsync, updateContactFormDataAsync } from "store/features/contact/contactSlice";
 
 const ContactListHeader = styled(Box)`
   display: flex;
@@ -37,7 +37,9 @@ export const ContactList = () => {
     setContactFormModal(true);
   };
   const onDelete = (data: ContactFormData) => {
-    console.log(data, "delete");
+    dispatch(
+      deleteContactFormDataAsync(data?.id as string)
+    );
   };
   const onCreateContact = (data: ContactFormData) => {
     dispatch(
