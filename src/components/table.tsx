@@ -59,7 +59,7 @@ const ContactTable: FC<ContactTableProps> = ({
 
   const handleChangePageSize = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPageSizeRowNumber(parseInt(event.target.value, 10));
-    setPageNumber(0);
+    setPageNumber(1);
   };
 
   const displayedData = data.slice(

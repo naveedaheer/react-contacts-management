@@ -24,7 +24,7 @@ export const ContactList = () => {
   const [contactToEdit, setContactToEdit] = useState<ContactFormData | null>(
     null
   );
-  const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
   const [pageSizeRowNumber, setPageSizeRowNumber] = useState(5);
 
   const dispatch = useAppDispatch();
