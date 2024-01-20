@@ -2,8 +2,8 @@ import axios, { AxiosResponse } from 'axios';
 import { ContactFormData, ContactParams } from 'interfaces/view/contact';
 
 
-// const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://contacts-management-a936dcf43aca.herokuapp.com';
-const apiUrl = 'http://localhost:4000';
+const apiUrl = process.env.REACT_APP_API_BASE_URL || 'https://contacts-management-a936dcf43aca.herokuapp.com';
+// const apiUrl = 'http://localhost:4000';
 
 export const fetchContacts = async (params: ContactParams
 ): Promise<ContactFormData> => {
@@ -33,7 +33,7 @@ export const updateContact = async (
     formData: ContactFormData
 ): Promise<ContactFormData> => {
     try {
-        const response: AxiosResponse<ContactFormData> = await axios.put(`${apiUrl}/contac/${id}`, formData);
+        const response: AxiosResponse<ContactFormData> = await axios.put(`${apiUrl}/contact/${id}`, formData);
         return response.data;
     } catch (error) {
         throw new Error('Failed to update contact form data');

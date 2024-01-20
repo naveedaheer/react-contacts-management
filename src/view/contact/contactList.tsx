@@ -44,11 +44,17 @@ export const ContactList = () => {
 
 
   const dispatch = useAppDispatch();
-  const { data, status, error } = useAppSelector(
+  const { data, status } = useAppSelector(
     (state) => state.contact.fetchData
   );
   const { status: deleteStatus } = useAppSelector(
     (state) => state.contact.deleteData
+  );
+  const { status: createStatus } = useAppSelector(
+    (state) => state.contact.createData
+  );
+  const { status: updateStatus } = useAppSelector(
+    (state) => state.contact.updateData
   );
   const onEdit = (data: ContactFormData) => {
     setContactToEdit(data);
@@ -96,7 +102,8 @@ export const ContactList = () => {
       setDeletedId('')
       setOpenSnackBar(true)
       handleFetchContact();
-      setSnackBarType('success')
+      setSnackBarType('success');
+      setContactFormModal(false);
     }
     else if (deleteStatus === 'failed') {
       setDeletedId('')
@@ -105,7 +112,35 @@ export const ContactList = () => {
     }
   }, [deleteStatus])
 
-  const isDisplayClearFilterButton = firstName || lastName || pageNumber !== 1 || pageSizeRowNumber !== 5
+
+  useEffect(() => {
+    if (createStatus === 'succeeded') {
+      setOpenSnackBar(true)
+      handleFetchContact();
+      setSnackBarType('success')
+      setContactFormModal(false);
+    }
+    else if (createStatus === 'failed') {
+      setOpenSnackBar(true)
+      setSnackBarType('error')
+    }
+  }, [createStatus])
+
+
+  useEffect(() => {
+    if (updateStatus === 'succeeded') {
+      setOpenSnackBar(true)
+      handleFetchContact();
+      setSnackBarType('success')
+      setContactFormModal(false);
+    }
+    else if (updateStatus === 'failed') {
+      setOpenSnackBar(true)
+      setSnackBarType('error')
+    }
+  }, [updateStatus])
+
+  const isDisplayClearFilterButton = firstName || lastName || pageNumber !== 1 || pageSizeRowNumber !== 5;
   return (
     <Box padding={5}>
       <ContactListHeader>
@@ -120,9 +155,6 @@ export const ContactList = () => {
           Add Contact
         </Button>
       </ContactListHeader>
-      <Typography variant="h6" component="h2" sx={{ mb: 3 }}>
-        Filters:
-      </Typography>
       <ContactListFilter>
         <TextField id="first_name" label="First Name" variant="standard" onChange={(e) => setFirstName(e.target.value)} value={firstName} />
         <TextField sx={{ ml: 2 }} id="last_name" label="Last Name" variant="standard" onChange={(e) => setLastName(e.target.value)} value={lastName} />
@@ -163,12 +195,13 @@ export const ContactList = () => {
         }
         mode={contactToEdit ? "edit" : "create"}
         initialData={contactToEdit ?? undefined}
+        isLoading={createStatus === 'loading' || updateStatus === 'loading'}
       />
       <DeleteConfirmationDialog
         onDelete={handleDeleteConfirmed}
         open={Boolean(deleteId)}
         handleClose={() => setDeletedId('')}
-        isLoading={deleteStatus === 'loading'}
+        isLoading={deleteStatus === 'loading' || updateStatus === 'loading'}
       />
       <SimpleSnackbar open={openSnackBar} handleClose={() => setOpenSnackBar(false)} type={snackBarType} />
     </Box>

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -7,6 +7,7 @@ import {
   Button,
   TextField,
   Grid,
+  CircularProgress,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -36,6 +37,7 @@ export const ContactFormModal: FC<ContactFormModalProps> = ({
   onSubmit,
   initialData,
   mode,
+  isLoading
 }) => {
 
   const formik = useFormik({
@@ -50,13 +52,18 @@ export const ContactFormModal: FC<ContactFormModalProps> = ({
     validationSchema: validationSchema,
     onSubmit: (values) => {
       onSubmit(values);
-      onClose();
     },
   });
   const handleClose = () => {
-    formik.resetForm(); // Reset the form when closing the modal
+    formik.resetForm();
     onClose();
   };
+
+  useEffect(() => {
+    if (open === false) {
+      formik.resetForm();
+    }
+  }, [open])
   return (
     <StyledDialog open={open} onClose={handleClose}>
       <form onSubmit={formik.handleSubmit}>
@@ -133,8 +140,9 @@ export const ContactFormModal: FC<ContactFormModalProps> = ({
           <Button type="button" onClick={handleClose} color="secondary" variant="contained">
             Cancel
           </Button>
-          <Button type="submit" color="primary" variant="contained">
-            {mode === "create" ? "Create" : "Save Changes"}
+          <Button type="submit" color="primary" variant="contained" disabled={isLoading}>
+            {isLoading ?
+              <CircularProgress size={'20px'} /> : mode === "create" ? "Create" : "Save Changes"}
           </Button>
         </DialogActions>
       </form>

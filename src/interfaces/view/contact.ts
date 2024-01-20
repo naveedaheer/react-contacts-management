@@ -4,6 +4,7 @@ export interface ContactFormModalProps {
     onSubmit: (formData: ContactFormData) => void;
     mode: 'create' | 'edit';
     initialData?: ContactFormData;
+    isLoading: boolean
 }
 
 
@@ -15,7 +16,7 @@ export interface ContactFormData {
     phoneNumber: string | number
 }
 
-export interface ContactParams{
+export interface ContactParams {
     pageSize: number,
     pageNumber: number,
     firstName?: string,
@@ -27,9 +28,9 @@ export interface PageInfo {
     currentPage: number;
     totalContacts: number;
     totalPages: number;
-  }
-  
-  export interface ContactsResponse {
+}
+
+export interface ContactsResponse {
     data: ContactFormData[];
     pageInfo: PageInfo;
-  }
+}
