@@ -6,11 +6,11 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { DeleteConfirmationProps } from 'interfaces/components/confirmation';
+import { CircularProgress } from '@mui/material';
 
-export const DeleteConfirmationDialog = ({ onDelete, open, handleClose }: DeleteConfirmationProps) => {
+export const DeleteConfirmationDialog = ({ onDelete, open, handleClose, isLoading }: DeleteConfirmationProps) => {
     const handleDelete = () => {
         onDelete();
-        handleClose();
     };
 
     return (
@@ -25,9 +25,11 @@ export const DeleteConfirmationDialog = ({ onDelete, open, handleClose }: Delete
                 <Button onClick={handleClose} color="primary">
                     Cancel
                 </Button>
-                <Button onClick={handleDelete} color="primary">
-                    Delete
+                <Button onClick={handleDelete} color="primary" disabled={isLoading}>
+                    {isLoading ?
+                        <CircularProgress size={'20px'} /> : 'Delete'}
                 </Button>
+
             </DialogActions>
         </Dialog>
     );

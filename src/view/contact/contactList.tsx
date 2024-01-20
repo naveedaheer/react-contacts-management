@@ -10,6 +10,7 @@ import { ContactFormData } from "interfaces/view/contact";
 import { useAppDispatch, useAppSelector } from "hooks/storeHook";
 import { createContactFormDataAsync, deleteContactFormDataAsync, fetchContactFormDataAsync, updateContactFormDataAsync } from "store/features/contact/contactSlice";
 import { DeleteConfirmationDialog } from "components/confirmation";
+import SimpleSnackbar from "components/snackbar";
 
 const ContactListHeader = styled(Box)`
   display: flex;
@@ -38,13 +39,17 @@ export const ContactList = () => {
   const [pageSizeRowNumber, setPageSizeRowNumber] = useState(5);
   const [firstName, setFirstName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
+  const [openSnackBar, setOpenSnackBar] = useState<boolean>(false)
+  const [snackBarType, setSnackBarType] = useState<'success' | 'error'>('success')
 
 
   const dispatch = useAppDispatch();
   const { data, status, error } = useAppSelector(
     (state) => state.contact.fetchData
   );
-
+  const { status: deleteStatus } = useAppSelector(
+    (state) => state.contact.deleteData
+  );
   const onEdit = (data: ContactFormData) => {
     setContactToEdit(data);
     setContactFormModal(true);
@@ -85,6 +90,20 @@ export const ContactList = () => {
       fetchContactFormDataAsync({ pageNumber: 1, pageSize: 5, })
     );
   }
+
+  useEffect(() => {
+    if (deleteStatus === 'succeeded') {
+      setDeletedId('')
+      setOpenSnackBar(true)
+      handleFetchContact();
+      setSnackBarType('success')
+    }
+    else if (deleteStatus === 'failed') {
+      setDeletedId('')
+      setOpenSnackBar(true)
+      setSnackBarType('error')
+    }
+  }, [deleteStatus])
 
   const isDisplayClearFilterButton = firstName || lastName || pageNumber !== 1 || pageSizeRowNumber !== 5
   return (
@@ -149,7 +168,9 @@ export const ContactList = () => {
         onDelete={handleDeleteConfirmed}
         open={Boolean(deleteId)}
         handleClose={() => setDeletedId('')}
+        isLoading={deleteStatus === 'loading'}
       />
+      <SimpleSnackbar open={openSnackBar} handleClose={() => setOpenSnackBar(false)} type={snackBarType} />
     </Box>
   );
 };
